@@ -2,18 +2,22 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 import Search from './Search'
-import Summary from './Summary'
-import weatherAPI from './utils/weatherAPI'
-import geocodeAPI from './utils/geocodeAPI'
+import Currently from './Currently'
+import Minutely from './Minutely'
+import Hourly from './Hourly'
+import Daily from './Daily'
+// import weatherAPI from './utils/weatherAPI'
+// import geocodeAPI from './utils/geocodeAPI'
 // import logo from './logo.svg';
 import './App.css'
+import Axios from 'axios'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      location: 'Los Angeles',
+      location: '',
       latitude: null,
       longitude: null,
       currently: null,
@@ -25,60 +29,83 @@ class App extends React.Component {
     this.setLocation = this.setLocation.bind(this)
   }
 
-  async setLocation(latitude, longitude) {
-    this.setState({ latitude: latitude, longitude: longitude })
+  async setLocation(latitude, longitude, location) {
+    this.setState({
+      latitude: latitude,
+      longitude: longitude,
+      location: location
+    })
 
-    // if (this.state.longitude && this.state.latitude) {
-    let weatherData = await weatherAPI.get(
-      `${process.env.REACT_APP_WEATHER_API_KEY}/${latitude},${longitude}`,
-      {}
+    let weatherData = await Axios.get(
+      `/forecast/${
+        process.env.REACT_APP_WEATHER_API_KEY
+      }/${latitude},${longitude}`
     )
-    this.setState({ currently: weatherData })
-    // weatherData = weatherData.body
-    // this.setState({
-    //   currently: weatherData.currently,
-    //   minutely: weatherData.minutely,
-    //   hourly: weatherData.hourly,
-    //   daily: weatherData.daily
-    // })
-    // }
+    weatherData = weatherData.data
+    this.setState({
+      currently: weatherData.currently,
+      minutely: weatherData.minutely,
+      hourly: weatherData.hourly,
+      daily: weatherData.daily
+    })
   }
 
   render() {
     return (
       <Router>
-        <div>
+        <li>
           <nav>
             <ul>
               <li>
-                <Link to='/summary'>Summary</Link>
+                <Link to='/currently' data={this.props.currently}>
+                  Currently
+                </Link>
               </li>
               <li>
-                <Link to='/hourly'>Hourly</Link>
+                <Link to='/minutely'>Minutely</Link>
               </li>
               <li>
-                <Link to='/daily'>Daily</Link>
+                <Link to='/hourly' data={this.state.hourly}>
+                  Hourly
+                </Link>
               </li>
               <li>
+                <Link to='/daily' data={this.state.daily}>
+                  Daily
+                </Link>
+              </li>
+              {/* <li>
                 <Link to='/radar'>Radar</Link>
-              </li>
-              <li>
-                <Link to='/alerts'>Alerts</Link>
-              </li>
+              </li>             */}
             </ul>
           </nav>
           <div>
             <Search setLocation={this.setLocation} />
           </div>
-          <Route path='/summary' component={Summary} />
+          <Route
+            path='/currently'
+            render={props => (
+              <Currently {...props} data={this.state.currently} />
+            )}
+          />
           {/* <Route path='/' exact component={App} /> */}
-          <Route path='/' component={App} />
+          {/* <Route path='/' component={App} /> */}
 
-          {/* <Route path='/hourly' component={Hourly} />
-          <Route path='/daily' component={Daily} />
-          <Route path='/radar' component={Radar} />
-          <Route path='/alerts' component={Alerts} /> */}
-        </div>
+          <Route
+            path='/hourly'
+            render={props => <Hourly {...props} data={this.state.hourly} />}
+          />
+          <Route
+            path='/daily'
+            render={props => <Daily {...props} data={this.state.daily} />}
+          />
+          <Route
+            path='/minutely'
+            render={props => <Minutely {...props} data={this.state.minutely} />}
+          />
+
+          {/* <Route path='/radar' component={Radar} /> */}
+        </li>
       </Router>
     )
   }

@@ -7,9 +7,10 @@ const SearchSuggestions = props => {
       <Link
         to={{
           pathname: '/'
-          // search: `?longitude=${s.center[0]}&latitude=${s.center[1]}`
         }}
-        onClick={() => props.setLocation(s.center[1], s.center[0])}
+        onClick={() =>
+          props.setLocation(s.center[1], s.center[0], s.place_name)
+        }
       >
         {s.place_name}
       </Link>

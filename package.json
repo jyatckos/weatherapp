@@ -10,6 +10,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1"
   },
+  "proxy": "https://api.darksky.net",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
