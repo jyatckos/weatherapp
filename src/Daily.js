@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Daily = props => {
-  const options = props.data.data.map(s => <li key={s.time} />)
+const Daily = ({ data }) => {
+  const options = data.data.map(s => <li key={s.time} />)
   return (
     <div>
-      <div>{props.data.summary}</div>
+      <div>{data.summary}</div>
       <ul>{options}</ul>
     </div>
   )

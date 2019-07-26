@@ -1,10 +1,29 @@
 import React from 'react'
 
-const Hourly = props => {
-  const options = props.data.data.map(s => <li key={s.time}>{s.summary}</li>)
+const Hourly = ({ data }) => {
+  const hours = data.data.map(h => (
+    <tr>
+      <td>{h.time}</td>
+      <td>{h.temperature}</td>
+      <td>{h.icon}</td>
+      <td>{h.precipProbability}</td>
+      <td>{h.windSpeed}</td>
+    </tr>
+  ))
   return (
     <div>
-      <ul>{options}</ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Temp</th>
+            <th>Icon</th>
+            <th>Precip.</th>
+            <th>Wind</th>
+          </tr>
+        </thead>
+        <tbody>{hours}</tbody>
+      </table>
     </div>
   )
 }

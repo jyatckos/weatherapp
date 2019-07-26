@@ -53,59 +53,55 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <li>
-          <nav>
-            <ul>
-              <li>
-                <Link to='/currently' data={this.props.currently}>
-                  Currently
-                </Link>
-              </li>
-              <li>
-                <Link to='/minutely'>Minutely</Link>
-              </li>
-              <li>
-                <Link to='/hourly' data={this.state.hourly}>
-                  Hourly
-                </Link>
-              </li>
-              <li>
-                <Link to='/daily' data={this.state.daily}>
-                  Daily
-                </Link>
-              </li>
-              {/* <li>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/currently" data={this.props.currently}>
+                Currently
+              </Link>
+            </li>
+            <li>
+              <Link to="/minutely">Minutely</Link>
+            </li>
+            <li>
+              <Link to="/hourly" data={this.state.hourly}>
+                Hourly
+              </Link>
+            </li>
+            <li>
+              <Link to="/daily" data={this.state.daily}>
+                Daily
+              </Link>
+            </li>
+            {/* <li>
                 <Link to='/radar'>Radar</Link>
               </li>             */}
-            </ul>
-          </nav>
-          <div>
-            <Search setLocation={this.setLocation} />
-          </div>
-          <Route
-            path='/currently'
-            render={props => (
-              <Currently {...props} data={this.state.currently} />
-            )}
-          />
-          {/* <Route path='/' exact component={App} /> */}
-          {/* <Route path='/' component={App} /> */}
+          </ul>
+        </nav>
+        <div>
+          <Search setLocation={this.setLocation} />
+        </div>
+        <Route
+          path="/currently"
+          render={props => <Currently {...props} data={this.state.currently} />}
+        />
+        {/* <Route path='/' exact component={App} /> */}
+        {/* <Route path='/' component={App} /> */}
 
-          <Route
-            path='/hourly'
-            render={props => <Hourly {...props} data={this.state.hourly} />}
-          />
-          <Route
-            path='/daily'
-            render={props => <Daily {...props} data={this.state.daily} />}
-          />
-          <Route
-            path='/minutely'
-            render={props => <Minutely {...props} data={this.state.minutely} />}
-          />
+        <Route
+          path="/hourly"
+          render={props => <Hourly {...props} data={this.state.hourly} />}
+        />
+        <Route
+          path="/daily"
+          render={props => <Daily {...props} data={this.state.daily} />}
+        />
+        <Route
+          path="/minutely"
+          render={props => <Minutely {...props} data={this.state.minutely} />}
+        />
 
-          {/* <Route path='/radar' component={Radar} /> */}
-        </li>
+        {/* <Route path='/radar' component={Radar} /> */}
       </Router>
     )
   }
